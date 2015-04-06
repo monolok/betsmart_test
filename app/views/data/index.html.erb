@@ -1,1 +1,25 @@
-<%= @response%>
+<%#console%>
+<%= @show%> 
+
+
+<br><br><br><br>
+
+<%= @odds%>
+
+<% @hash.each do |h|%>
+<ul>
+	<li><%= h[0]%></li>
+	<li><%= h[1]%></li>
+	<br>
+	<li>odds</li>
+	<% s= h[1]%>
+	<li><%= s[0..31]%></li>
+	<li><%= s[31..62]%></li>
+	<li><%= s[62..93]%></li>
+	<br>
+	<li>Teams</li>
+	<% t = h[0]%>
+	<li><%# %></li>
+	<li><%#%></li>
+</ul>
+<%end%>
