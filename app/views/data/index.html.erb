@@ -1,25 +1,80 @@
-<%#console%>
+<%=console%>
 <%= @show%> 
 
+<% @datum.each do |game|%>
+	<div class="bs-example" data-example-id="hoverable-table">
+	    <table class="table table-hover">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th>Home</th>
+	          <th>Away</th>
+	          <th>Home Win</th>
+	          <th>Draw</th>
+			  <th>Away Win</th>
+			  <th>Surebet</th>
+			  <th>Surebet No-Draw</th>
+			  <th>Surebet Home-Win</th>
+			  <th>Surebet Away-Win</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <th scope="row"><%= game.id%></th>
+	          <td><%= game.home%></td>
+	          <td><%= game.away%></td>
+	          <td><%= game.odd_win_home%></td>
+	          <td><%= game.odd_draw%></td>
+	          <td><%= game.odd_win_away%></td>
+	          <td><%= game.surebet.round(2)%></td>
+	          <td>
+	          	Ratio: <%= game.surebet_risk_draw.round(2)%>
+	          	<% ratio_home = game.odd_win_home %>
+	          	<% ratio_away = game.odd_win_away%>
+	          	Bet: <%= (1/ratio_home*100).round(2)%> on Home and <%= (1/ratio_away*100).round(2)%> for a total of <%= (1/ratio_home*100).round(2) + (1/ratio_away*100).round(2) %>
+	          	Risk: 100$
+	          	Profit: <%= 100 - ((1/ratio_home*100).round(2) + (1/ratio_away*100).round(2))%>
+	          </td>
 
-<br><br><br><br>
 
-<%= @odds%>
 
-<% @hash.each do |h|%>
-<ul>
-	<li><%= h[0]%></li>
-	<li><%= h[1]%></li>
-	<br>
-	<li>odds</li>
-	<% s= h[1]%>
-	<li><%= s[0..31]%></li>
-	<li><%= s[31..62]%></li>
-	<li><%= s[62..93]%></li>
-	<br>
-	<li>Teams</li>
-	<% t = h[0]%>
-	<li><%# %></li>
-	<li><%#%></li>
-</ul>
+<!-- 	         FINIH SUREBET HOME AND AWAY RISK  -->
+			  <td>
+				Ratio: <%= game.surebet_risk_draw.round(2)%>
+				<% ratio_home = game.odd_win_home %>
+				<% ratio_away = game.odd_win_away%>
+				Bet: <%= (1/ratio_home*100).round(2)%> on Home and <%= (1/ratio_away*100).round(2)%> for a total of <%= (1/ratio_home*100).round(2) + (1/ratio_away*100).round(2) %>
+				Risk: 100$
+				Profit: <%= 100 - ((1/ratio_home*100).round(2) + (1/ratio_away*100).round(2))%>
+			  </td>
+			  <td>
+				Ratio: <%= game.surebet_risk_draw.round(2)%>
+				<% ratio_home = game.odd_win_home %>
+				<% ratio_away = game.odd_win_away%>
+				Bet: <%= (1/ratio_home*100).round(2)%> on Home and <%= (1/ratio_away*100).round(2)%> for a total of <%= (1/ratio_home*100).round(2) + (1/ratio_away*100).round(2) %>
+				Risk: 100$
+				Profit: <%= 100 - ((1/ratio_home*100).round(2) + (1/ratio_away*100).round(2))%>
+			  </td>
+	        </tr>
+
+
+
+
+	        
+<!-- 	        <tr>
+	          <th scope="row">2</th>
+	          <td>Jacob</td>
+	          <td>Thornton</td>
+	          <td>@fat</td>
+	        </tr>
+	        <tr>
+	          <th scope="row">3</th>
+	          <td>Larry</td>
+	          <td>the Bird</td>
+	          <td>@twitter</td>
+	        </tr> -->
+	      </tbody>
+	    </table>
+	</div>
 <%end%>
+

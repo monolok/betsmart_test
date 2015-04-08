@@ -2,11 +2,17 @@ class DataController < ApplicationController
 require 'open-uri'
 
 def index
+
+	if Datum.all.empty? != true
+		Datum.all.destroy_all
+	end
+
+#get Betclic URL
 	url = "https://www.betclic.fr/football/ligue-1-e4"
 	doc = Nokogiri::HTML(open(url))
 	@show = doc.at_css("title").text
 
-
+#Get Game block and extract team's names and odds
 	@hash = Hash.new
 	doc.css(".CompetitionEvtSpe").each do |g|
 		name = g.at_css(".match-name").text
@@ -16,16 +22,51 @@ def index
 		# @betfair = g.at_css(".match-odds").text
 	end
 
-	@odds = Array.new
+#strip and chomp data to record in database
 	@hash.each do |h|
-		@odds.push(h[1]) #string of 3 odds
+		teams = h[0]
+		team_home = teams[0..(teams.index(" - "))].strip
+		team_away = teams[(teams.index(" - "))+2..(teams.size)].strip
+
+		odds = h[1]
+		odd_home = (odds[0..31].gsub!(/,/, '').to_f)/100
+		odd_draw = (odds[31..62].gsub!(/,/, '').to_f)/100
+		odd_away = (odds[62..93].gsub!(/,/, '').to_f)/100
+
+		Datum.create(home: team_home, away: team_away, odd_win_home: odd_home, odd_draw: odd_draw, odd_win_away: odd_away)
 	end
 
-# 	 t.string   "home"
-#    t.string   "away"
-#    t.integer  "odd_win_home"
-#    t.integer  "odd_draw"
-#    t.integer  "odd_win_away"
+	@datum = Datum.all
+
+#Run Surebet calculation and record results to DB
+	@datum.each do |game|
+		#Surebet result
+		result = (1/game.odd_win_home) + (1/game.odd_draw) + (1/game.odd_win_away)
+		game.update(surebet: result)
+		#surebet draw risk
+		highest_two = game.odd_win_home, game.odd_win_away
+		result_risk = (1/highest_two.first) + (1/highest_two.last)
+		game.update(surebet_risk_draw: result_risk)
+		#surebet home-win risk
+
+				# CODE
+
+
+		#surebet awway-win risk
+
+				# CODE
+
+	end
+
+    # t.string   "home"
+    # t.string   "away"
+    # t.decimal  "odd_win_home",      precision: 4, scale: 3
+    # t.decimal  "odd_draw",          precision: 4, scale: 3
+    # t.decimal  "odd_win_away",      precision: 4, scale: 3
+    # t.decimal  "surebet",           precision: 4, scale: 3
+    # t.decimal  "surebet_risk_draw", precision: 4, scale: 3
+    # t.decimal  "surebet_risk_home", precision: 4, scale: 3
+    # t.decimal  "surebet_risk_away", precision: 4, scale: 3
 
 	# doc.css(".match-odds").each do |t|
 	# 	@test = t.at_css(".odd-button").text

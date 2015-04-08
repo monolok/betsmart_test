@@ -11,16 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406230104) do
+ActiveRecord::Schema.define(version: 20150407234119) do
 
   create_table "data", force: :cascade do |t|
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "home"
     t.string   "away"
-    t.integer  "odd_win_home"
-    t.integer  "odd_draw"
-    t.integer  "odd_win_away"
+    t.decimal  "odd_win_home",      precision: 4, scale: 3
+    t.decimal  "odd_draw",          precision: 4, scale: 3
+    t.decimal  "odd_win_away",      precision: 4, scale: 3
+    t.decimal  "surebet",           precision: 4, scale: 3
+    t.decimal  "surebet_risk_draw", precision: 4, scale: 3
+    t.decimal  "surebet_risk_home", precision: 4, scale: 3
+    t.decimal  "surebet_risk_away", precision: 4, scale: 3
   end
 
 end

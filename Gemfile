@@ -30,6 +30,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'unicorn'
 #gem 'rest-client'
 gem 'nokogiri'
+gem 'font-awesome-rails'
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
