@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407234119) do
+ActiveRecord::Schema.define(version: 20150409001343) do
+
+  create_table "bwins", force: :cascade do |t|
+    t.string   "home_team"
+    t.string   "away_team"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.decimal  "odd_win_home", precision: 4, scale: 3
+    t.decimal  "odd_draw",     precision: 4, scale: 3
+    t.decimal  "odd_win_away", precision: 4, scale: 3
+  end
 
   create_table "data", force: :cascade do |t|
     t.datetime "created_at",                                null: false

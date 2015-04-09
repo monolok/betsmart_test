@@ -44,67 +44,86 @@ def index
 		result = (1/game.odd_win_home) + (1/game.odd_draw) + (1/game.odd_win_away)
 		game.update(surebet: result)
 		#surebet draw risk
-		highest_two = game.odd_win_home, game.odd_win_away
-		result_risk = (1/highest_two.first) + (1/highest_two.last)
+		no_draw = game.odd_win_home, game.odd_win_away
+		result_risk = (1/no_draw.first) + (1/no_draw.last)
 		game.update(surebet_risk_draw: result_risk)
 		#surebet home-win risk
-
-				# CODE
-
-
+		no_home_win = game.odd_draw, game.odd_win_away
+		result_risk2 = (1/no_home_win.first) + (1/no_home_win.last)
+		game.update(surebet_risk_home: result_risk2)
 		#surebet awway-win risk
+		no_away_win = game.odd_draw, game.odd_win_home
+		result_risk3 = (1/no_away_win.first) + (1/no_away_win.last)
+		game.update(surebet_risk_away: result_risk3)
+	end
+end
 
-				# CODE
+def test
+	if Bwin.all.empty? != true
+		Bwin.all.destroy_all
+	end
+	#get Bwin URL
+	url_bwin = "https://sports.bwin.fr/fr/sports#leagueIds=19328&sportId=4"
+	@doc_bwin = Nokogiri::HTML(open(url_bwin))
+	@show_bwin = @doc_bwin.at_css("title").text
+	# @doc_bwin.css("table").each do |doc|
+	# 	@test1 = doc.at_css("tr").text
+	# end
+	
 
+	#Get Game block and extract team's names and odds
+	@hash_bwin = Hash.new
+	@c = 0
+	@doc_bwin.css("table").each do |g|
+		@game_data = g.at_css("tr").text
+		@game_data.delete!("\n")
+		@game_data.delete!("\r")
+		@game_data.strip
+		@game_data.delete!(" ")
+		@hash_bwin[@c] = @game_data
+		@hash_bwin.delete_if {|key, value| value.include?("X") == false }
+		#REMOVE ALL NUMBER FROM STRING
+		@hash_bwin.each{ |k, v| @hash_bwin[k] = @hash_bwin[k].delete('^a-zA-Z ') }
+		@c = @c + 1
+	end
+	#Record Team Names to DB
+	@hash_bwin.values.each do |v|
+		home_team_name = v[0..(v.index("X")-1)]
+		away_team_name = v[(v.index("X")+1)..v.size]
+		Bwin.create(home_team: home_team_name, away_team: away_team_name)
 	end
 
-    # t.string   "home"
-    # t.string   "away"
-    # t.decimal  "odd_win_home",      precision: 4, scale: 3
-    # t.decimal  "odd_draw",          precision: 4, scale: 3
-    # t.decimal  "odd_win_away",      precision: 4, scale: 3
-    # t.decimal  "surebet",           precision: 4, scale: 3
-    # t.decimal  "surebet_risk_draw", precision: 4, scale: 3
-    # t.decimal  "surebet_risk_home", precision: 4, scale: 3
-    # t.decimal  "surebet_risk_away", precision: 4, scale: 3
 
-	# doc.css(".match-odds").each do |t|
-	# 	@test = t.at_css(".odd-button").text
-	# end
+#WITH INCLUDE METHOD ADD ODDS TO Bwin.record by finding Bwin.where(home_team: ?????)
+
+	@hash_bwin_odds = Hash.new
+	@c = 0
+	@doc_bwin.css("table").each do |g|
+		@game_data_odds = g.at_css("tr").text
+		@game_data_odds.delete!("\n")
+		@game_data_odds.delete!("\r")
+		@game_data_odds.strip
+		@game_data_odds.delete!(" ")
+		@hash_bwin_odds[@c] = @game_data
+		@hash_bwin_odds.delete_if {|key, value| value.include?("X") == false }
+		@c = @c + 1
+	end
+
+
+
+
+
+# t.decimal  "odd_win_home"
+# t.decimal  "odd_draw"
+# t.decimal  "odd_win_away"
+
+
+
+
+
 end
 
 end
-
-
-# url = "http://www.walmart.com/search/search-ng.do?search_constraint=0&ic=48_0&search_query=batman&Find.x=0&Find.y=0&Find=Find"
-# doc = Nokogiri::HTML(open(url))
-# puts doc.at_css("title").text
-# doc.css(".item").each do |item|
-#   title = item.at_css(".prodLink").text
-#   price = item.at_css(".PriceCompare .BodyS, .PriceXLBold").text[/\$[0-9\.]+/]
-#   puts "#{title} - #{price}"
-#   puts item.at_css(".prodLink")[:href]
-# end
-
-
-#lib/tasks/product_prices.rake 
-
-# desc "Fetch product prices"
-# task :fetch_prices => :environment do
-#   require 'nokogiri'
-#   require 'open-uri'
-  
-#   Product.find_all_by_price(nil).each do |product|
-#     url = "http://www.walmart.com/search/search-ng.do?search_constraint=0&ic=48_0&search_query=#{CGI.escape(product.name)}&Find.x=0&Find.y=0&Find=Find"
-#     doc = Nokogiri::HTML(open(url))
-#     price = doc.at_css(".PriceCompare .BodyS, .PriceXLBold").text[/[0-9\.]+/]
-#     product.update_attribute(:price, price)
-#   end
-# end
-
-
-
-
 
 
 #@response = RestClient.get 'https://www.betclic.fr/football/ligue-1-e4' #, {:params => {:id => 50, 'foo' => 'bar'}}	

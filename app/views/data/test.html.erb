@@ -1,0 +1,12 @@
+<%=console%>
+<%= @show_bwin%> 
+<%= link_to "TESTING", test_path%>
+<%= link_to "Betclic", root_path%>
+<br>
+<%Bwin.all.each do |t|%>
+<%= t.home_team%>
+<%= t.away_team%>
+<%end%>
+
+
+<%= @hash_bwin_odds%>
