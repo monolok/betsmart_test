@@ -1,56 +1,7 @@
+<i class="fa fa-cog fa-spin fa-5x"></i>
 <%#console%>
 <%= @show%> 
 <%= link_to "TESTING", test_path%>
-<% @datum.each do |game|%>
-	<div class="bs-example" data-example-id="hoverable-table">
-	    <table class="table table-hover">
-	      <thead>
-	        <tr>
-	          <th>#</th>
-	          <th>Home</th>
-	          <th>Away</th>
-	          <th>Home Win</th>
-	          <th>Draw</th>
-			  <th>Away Win</th>
-			  <th>Surebet</th>
-			  <th>Surebet No-Draw</th>
-			  <th>Surebet No-Home-Win</th>
-			  <th>Surebet No-Away-Win</th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	        <tr>
-	          <th scope="row"><%= game.id%></th>
-	          <td><%= game.home%></td>
-	          <td><%= game.away%></td>
-	          <td><%= game.odd_win_home%></td>
-	          <td><%= game.odd_draw%></td>
-	          <td><%= game.odd_win_away%></td>
-	          <td><%= game.surebet.round(2)%></td>
-	          <td>
-	          	Ratio: <%= game.surebet_risk_draw.round(2)%>
-	          	<% ratio_home = game.odd_win_home %>
-	          	<% ratio_away = game.odd_win_away%>
-	          	Bet: <%= (1/ratio_home*100).round(2)%> on Home and <%= (1/ratio_away*100).round(2)%> on Away for a total of <%= (1/ratio_home*100).round(2) + (1/ratio_away*100).round(2) %>
-	          	Profit: <%= 100 - ((1/ratio_home*100).round(2) + (1/ratio_away*100).round(2))%>
-	          </td>
-			  <td>
-				Ratio: <%= game.surebet_risk_home.round(2)%>
-				<% ratio_draw = game.odd_draw %>
-				<% ratio_away = game.odd_win_away%>
-				Bet: <%= (1/ratio_draw*100).round(2)%> on Draw and <%= (1/ratio_away*100).round(2)%> on Away for a total of <%= (1/ratio_draw*100).round(2) + (1/ratio_away*100).round(2) %>
-				Profit: <%= 100 - ((1/ratio_draw*100).round(2) + (1/ratio_away*100).round(2))%>
-			  </td>
-			  <td>
-				Ratio: <%= game.surebet_risk_away.round(2)%>
-				<% ratio_draw = game.odd_draw %>
-				<% ratio_home = game.odd_win_home%>
-				Bet: <%= (1/ratio_draw*100).round(2)%> on Draw and <%= (1/ratio_home*100).round(2)%> on Home for a total of <%= (1/ratio_draw*100).round(2) + (1/ratio_home*100).round(2) %>
-				Profit: <%= 100 - ((1/ratio_draw*100).round(2) + (1/ratio_home*100).round(2))%>
-			  </td>
-	        </tr>
-	      </tbody>
-	    </table>
-	</div>
-<%end%>
 
+<%= @test%>
+<%= @test1%>

@@ -3,11 +3,25 @@ require 'open-uri'
 
 def index
 
+	#get URL
+	url = "http://www.coteur.com/surebet.php"
+	doc = Nokogiri::HTML(open(url))
+	@show = doc.at_css("title").text
+
+	@test = doc.css('tfoot').text
+	if @test = "Pas de surebet en ce moment"
+		@test1 = false
+	end
+
+	
+
+end
+
+def test
 	if Datum.all.empty? != true
 		Datum.all.destroy_all
 	end
-
-#get Betclic URL
+	#get Betclic URL
 	url = "https://www.betclic.fr/football/ligue-1-e4"
 	doc = Nokogiri::HTML(open(url))
 	@show = doc.at_css("title").text
@@ -58,70 +72,24 @@ def index
 	end
 end
 
-def test
-	if Bwin.all.empty? != true
-		Bwin.all.destroy_all
-	end
-	#get Bwin URL
-	url_bwin = "https://sports.bwin.fr/fr/sports#leagueIds=19328&sportId=4"
-	@doc_bwin = Nokogiri::HTML(open(url_bwin))
-	@show_bwin = @doc_bwin.at_css("title").text
-	# @doc_bwin.css("table").each do |doc|
-	# 	@test1 = doc.at_css("tr").text
-	# end
-	
 
-	#Get Game block and extract team's names and odds
-	@hash_bwin = Hash.new
-	@c = 0
-	@doc_bwin.css("table").each do |g|
-		@game_data = g.at_css("tr").text
-		@game_data.delete!("\n")
-		@game_data.delete!("\r")
-		@game_data.strip
-		@game_data.delete!(" ")
-		@hash_bwin[@c] = @game_data
-		@hash_bwin.delete_if {|key, value| value.include?("X") == false }
-		#REMOVE ALL NUMBER FROM STRING
-		@hash_bwin.each{ |k, v| @hash_bwin[k] = @hash_bwin[k].delete('^a-zA-Z ') }
-		@c = @c + 1
-	end
-	#Record Team Names to DB
-	@hash_bwin.values.each do |v|
-		home_team_name = v[0..(v.index("X")-1)]
-		away_team_name = v[(v.index("X")+1)..v.size]
-		Bwin.create(home_team: home_team_name, away_team: away_team_name)
-	end
+#MAILER MAILER EXEMPLE
 
+# def create
+#   @record = Record.new
+    
+#   if @record.save
+#     ModelMailer.new_record_notification(@record).deliver
+#     redirect_to @record
+#   end
+# end
 
-#WITH INCLUDE METHOD ADD ODDS TO Bwin.record by finding Bwin.where(home_team: ?????)
+# def new_order(order)
+#   # @greeting = "Hi there is a new order"
+#   @order = order
 
-	@hash_bwin_odds = Hash.new
-	@c = 0
-	@doc_bwin.css("table").each do |g|
-		@game_data_odds = g.at_css("tr").text
-		@game_data_odds.delete!("\n")
-		@game_data_odds.delete!("\r")
-		@game_data_odds.strip
-		@game_data_odds.delete!(" ")
-		@hash_bwin_odds[@c] = @game_data
-		@hash_bwin_odds.delete_if {|key, value| value.include?("X") == false }
-		@c = @c + 1
-	end
-
-
-
-
-
-# t.decimal  "odd_win_home"
-# t.decimal  "odd_draw"
-# t.decimal  "odd_win_away"
-
-
-
-
-
-end
+#   mail to: "antoinebe35@gmail.com"
+# end
 
 end
 
