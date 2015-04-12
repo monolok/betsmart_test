@@ -1,5 +1,12 @@
-<h1>SureBet#sure_bet_send</h1>
-
-<p>
-  <%= @greeting %>, find me in app/views/sure_bet/sure_bet_send.html.erb
-</p>
+<h3>Surebet comming up: <%= @size%></h3>
+<div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover">
+      <tbody>
+      <% @game_data.each do |game|%>
+        <tr>
+			<td><%= game%></td>
+        </tr>
+       <%end%>
+      </tbody>
+    </table>
+</div>

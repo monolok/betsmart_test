@@ -1,7 +1,18 @@
+<%# link_to "TESTING", test_path%>
+<%= console%>
 <i class="fa fa-cog fa-spin fa-5x"></i>
-<%#console%>
-<%= @show%> 
-<%= link_to "TESTING", test_path%>
-
-<%= @test%>
+<h3>Surebet comming up: <%= @size%></h3>
 <%= @test1%>
+<div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover">
+      <tbody>
+      <% @game_data.each do |game|%>
+        <tr>
+			<td><%= game%></td>
+        </tr>
+       <%end%>
+      </tbody>
+    </table>
+</div>
+ 
+ <%# @game_data[0]%>
