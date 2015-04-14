@@ -34,7 +34,7 @@ gem 'nokogiri'
 gem 'font-awesome-rails'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-gem 'whenever', :require => false
+#gem 'whenever', :require => false
 gem 'rails_12factor', group: :production
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
