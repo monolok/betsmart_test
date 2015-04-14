@@ -2,7 +2,12 @@ class DataController < ApplicationController
 require 'open-uri'
 
 def index
+	
+end
 
+
+def test
+	
 	#get URL
 	url = "http://www.coteur.com/surebet.php"
 	doc = Nokogiri::HTML(open(url))
@@ -20,15 +25,11 @@ def index
 		SureBet.sure_bet_send(@game_data, @size).deliver
 	else
 		@size = 0
-		@test1 = false
+		#@test1 = false
 	end
 
 #s.delete("^a-zA-Z")  REMOVE ALL LETTER OR DIGIT FROM STRING ? REGEX
-	
-end
 
-
-def test
 	# if Datum.all.empty? != true
 	# 	Datum.all.destroy_all
 	# end
