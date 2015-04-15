@@ -1,6 +1,6 @@
 class Datum < ActiveRecord::Base
 
-	def send_bet
+	def self.send_bet
 		app.get '/test'
 	end
 
