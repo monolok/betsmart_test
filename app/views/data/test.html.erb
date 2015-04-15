@@ -1,3 +1,4 @@
+<%# console%>
 <h3>Surebet comming up: <%= @size%></h3>
 <%# @test1%>
 <div class="bs-example" data-example-id="hoverable-table">
@@ -6,6 +7,7 @@
       <% if @game_data.nil? %>
   	    <tr>
 			<td>Pas de surebet en cours</td>
+      <%= @game_data%>
         </tr>
       <%else%>
 	      <% @game_data.each do |game|%>
