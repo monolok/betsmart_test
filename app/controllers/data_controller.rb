@@ -1,5 +1,4 @@
 class DataController < ApplicationController
-require 'nokogiri'
 require 'open-uri'
 
 def index
