@@ -6,6 +6,6 @@ desc "This task is called by the Heroku scheduler add-on"
 # end
 
 task :send_bet => :environment do
-  Datum.send_bet
+	app.get '/test'
 end
 
