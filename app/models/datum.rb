@@ -1,7 +1,7 @@
 class Datum < ActiveRecord::Base
 
 	def self.send_bet
-		app.get '/test'
+		redirect_to test_path
 	end
 
 end
