@@ -6,7 +6,8 @@ desc "This task is called by the Heroku scheduler add-on"
 # end
 
 task :send_bet => :environment do
-	puts "Aller Rennes"
-	#Datum.send_bet
+	puts "Sending e-mail..."
+	Datum.send_bet
+	puts "done."
 end
 
