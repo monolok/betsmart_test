@@ -1,5 +1,6 @@
 <h3>Surebet comming up: <%= @size%></h3>
 <div class="bs-example" data-example-id="hoverable-table">
+<% if @size >= 1%>
     <table class="table table-hover">
       <tbody>
       <% @game_data.each do |game|%>
@@ -9,4 +10,7 @@
        <%end%>
       </tbody>
     </table>
+<%else%>
+<p>No sure bet for now</p>
+<%end%>
 </div>

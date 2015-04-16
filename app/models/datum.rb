@@ -16,10 +16,13 @@ require 'open-uri'
 			end
 		end
 
-		# @size = @game_data.size
-		# if @size >= 1
-		# 	SureBet.sure_bet_send(@game_data, @size).deliver_now
-		# end
+		@size = @game_data.size
+		if @size >= 1
+			SureBet.sure_bet_send(@game_data, @size).deliver_now
+		else
+			@game_data = 0
+			SureBet.sure_bet_send(@game_data, @size).deliver_now
+		end
 
 	end
 
