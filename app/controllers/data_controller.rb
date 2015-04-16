@@ -12,7 +12,7 @@ def test
 	doc = Nokogiri::HTML(open(url))
 	@show = doc.at_css("title").text
 
-	if doc.css('tfoot').text.empty? #== "Pas de surebet en ce moment"
+	if not doc.css('tfoot').text.empty? #== "Pas de surebet en ce moment"
 		@game_data = Array.new
 		doc.css('tbody').each do |tr|
 			tr.css("tr").each do |f|
@@ -21,7 +21,7 @@ def test
 		end
 		@size = @game_data.size
 		#@test1 = true
-		SureBet.sure_bet_send(@game_data, @size).deliver
+		SureBet.sure_bet_send(@game_data, @size).deliver_now
 	else
 		@size = 0
 		#@test1 = false
