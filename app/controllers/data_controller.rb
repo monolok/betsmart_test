@@ -24,7 +24,6 @@ require 'open-uri'
 			SureBet.sure_bet_send(@game_data, @size).deliver_now
 		end
 
-
 	end
 
 

@@ -16,13 +16,6 @@ require 'open-uri'
 			end
 		end
 
-		# @size = @game_data.size
-		# if @size >= 1
-		# 	Datum.create(home: @game_data)
-		# 	#SureBet.sure_bet_send(@game_data, @size).deliver_now
-		# else
-		# 	Datum.create(home: nil)
-		# end
 	end
 
 
