@@ -2,7 +2,6 @@ class DataController < ApplicationController
 require 'open-uri'
 
 def index
-	
 end
 
 
