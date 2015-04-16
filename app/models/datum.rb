@@ -12,7 +12,7 @@ require 'open-uri'
 		doc.css('tbody').each do |tr|
 			tr.css("tr").each do |f|
 				@game_data.push(f.css("td").text)
-				Datum.create(home: @game_data)
+				#Datum.create(home: @game_data)
 			end
 		end
 
